@@ -23,6 +23,19 @@ const projects = [
     stack: ['Python', 'FastAPI', 'React', 'Claude AI'],
     category: 'AI / Language',
   },
+  {
+    name: 'FitLink',
+    tagline: 'Find your perfect health coach. Without the guesswork.',
+    description:
+      "Finding a good health coach is weirdly hard — too many options, zero context on who's actually right for you. FitLink fixes the matchmaking problem so you spend less time searching and more time actually getting fit.",
+    url: 'https://fitlink.codecrumbs.in',
+    logo: null,
+    logoDark: false,
+    accentColor: '#10B981',
+    stack: ['TBD'],
+    category: 'Health & Fitness',
+    comingSoon: true,
+  },
 ]
 
 function TechBadge({ tech, accent }) {
@@ -50,6 +63,11 @@ function ProjectCard({ project, index }) {
           >
             {project.category}
           </span>
+          {project.comingSoon && (
+            <span className="text-xs px-3 py-1 rounded-full font-medium uppercase tracking-wider border border-white/10 text-white/30">
+              In progress
+            </span>
+          )}
         </div>
 
         <h3 className="text-4xl font-black tracking-tight mb-3" style={{ color: project.accentColor }}>
@@ -64,18 +82,33 @@ function ProjectCard({ project, index }) {
           ))}
         </div>
 
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-black transition-all hover:scale-105 active:scale-95"
-          style={{ backgroundColor: project.accentColor }}
-        >
-          Visit {project.name}
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 17L17 7M7 7h10v10" />
-          </svg>
-        </a>
+        {project.comingSoon ? (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 active:scale-95 border"
+            style={{ borderColor: `${project.accentColor}50`, color: project.accentColor }}
+          >
+            See the concept page
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 17L17 7M7 7h10v10" />
+            </svg>
+          </a>
+        ) : (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-black transition-all hover:scale-105 active:scale-95"
+            style={{ backgroundColor: project.accentColor }}
+          >
+            Visit {project.name}
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 17L17 7M7 7h10v10" />
+            </svg>
+          </a>
+        )}
       </div>
 
       {/* Visual side */}
@@ -85,12 +118,24 @@ function ProjectCard({ project, index }) {
           style={{ backgroundColor: project.accentColor }}
         />
         <div className="relative rounded-3xl border border-white/8 overflow-hidden bg-white/[0.03] aspect-[4/3] flex items-center justify-center p-12">
-          <img
-            src={project.logo}
-            alt={`${project.name} logo`}
-            className="max-w-[200px] max-h-[200px] w-full h-full object-contain"
-            style={project.logoDark ? { borderRadius: '16px' } : {}}
-          />
+          {project.logo ? (
+            <img
+              src={project.logo}
+              alt={`${project.name} logo`}
+              className="max-w-[200px] max-h-[200px] w-full h-full object-contain"
+              style={project.logoDark ? { borderRadius: '16px' } : {}}
+            />
+          ) : (
+            <div className="flex flex-col items-center gap-4 text-center">
+              <div
+                className="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-black"
+                style={{ backgroundColor: `${project.accentColor}20`, color: project.accentColor }}
+              >
+                {project.name[0]}
+              </div>
+              <p className="text-xs text-white/20 uppercase tracking-widest">Coming soon</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -105,10 +150,10 @@ export default function Projects() {
           <p className="text-xs text-[#EC4899] uppercase tracking-widest mb-4 font-medium">Projects</p>
           <h2 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
             The apps.{' '}
-            <span className="text-white/30">Both of them.</span>
+            <span className="text-white/30">All three of them.</span>
           </h2>
           <p className="mt-4 text-white/40 max-w-lg">
-            Quality over quantity — each one is actually finished and actually useful.
+            Two live, one in the oven. Quality over quantity — each one is focused on doing exactly one thing well.
           </p>
         </div>
 
