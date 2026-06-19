@@ -24,6 +24,9 @@ export default function Footer() {
             <a href="https://lexie.codecrumbs.in" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-[#8B5CF6] transition-colors">
               Lexie
             </a>
+            <a href="https://fitlink.codecrumbs.in" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-[#10B981] transition-colors">
+              FitLink <span className="text-white/20 text-xs">(soon)</span>
+            </a>
           </div>
         </div>
 
