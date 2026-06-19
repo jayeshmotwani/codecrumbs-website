@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-orange: #F97316;
+    --color-pink: #EC4899;
+    --color-purple: #8B5CF6;
+    --color-yellow: #FCD34D;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0a0a0a;
+    color: #f5f5f5;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
