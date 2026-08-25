@@ -144,16 +144,17 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-32 px-6">
+    <section id="work" className="py-32 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-20">
-          <p className="text-xs text-[#EC4899] uppercase tracking-widest mb-4 font-medium">Projects</p>
+          <p className="text-xs text-[#EC4899] uppercase tracking-widest mb-4 font-medium">Work</p>
           <h2 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight">
-            The apps.{' '}
-            <span className="text-white/30">All three of them.</span>
+            Proof,{' '}
+            <span className="text-white/30">not promises.</span>
           </h2>
           <p className="mt-4 text-white/40 max-w-lg">
-            Two live, one in the oven. Quality over quantity — each one is focused on doing exactly one thing well.
+            These aren't mockups — they're live products I designed, built, and shipped end to end.
+            Quality over quantity.
           </p>
         </div>
 

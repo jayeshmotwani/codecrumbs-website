@@ -12,20 +12,23 @@ export default function Footer() {
               <span className="text-white">Crumbs</span>
             </div>
             <p className="text-white/30 text-sm max-w-xs">
-              Small apps built by one person who can't stop building things.
+              Freelance developer turning ideas into shipped MVPs — one project at a time.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
-            <p className="text-xs text-white/25 uppercase tracking-widest">Projects</p>
-            <a href="https://skillfolio.dev" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-[#F97316] transition-colors">
-              Skillfolio
+            <p className="text-xs text-white/25 uppercase tracking-widest">Get in touch</p>
+            <a
+              href="mailto:jayeshmotwani99@gmail.com"
+              className="text-sm text-white/40 hover:text-[#F97316] transition-colors"
+            >
+              jayeshmotwani99@gmail.com
             </a>
-            <a href="https://lexie.codecrumbs.in" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-[#8B5CF6] transition-colors">
-              Lexie
+            <a href="#work" className="text-sm text-white/40 hover:text-[#EC4899] transition-colors">
+              See recent work
             </a>
-            <a href="https://fitlink.codecrumbs.in" target="_blank" rel="noopener noreferrer" className="text-sm text-white/40 hover:text-[#10B981] transition-colors">
-              FitLink <span className="text-white/20 text-xs">(soon)</span>
+            <a href="#process" className="text-sm text-white/40 hover:text-[#8B5CF6] transition-colors">
+              How it works
             </a>
           </div>
         </div>
