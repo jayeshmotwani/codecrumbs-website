@@ -10,15 +10,15 @@ export default function Hero() {
         {/* Eyebrow */}
         <div className="inline-flex items-center gap-2 mb-8 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/50 uppercase tracking-widest">
           <span className="w-1.5 h-1.5 rounded-full bg-[#F97316] animate-pulse" />
-          Built in public · No VC money · No BS
+          Freelance developer · AWS heavy · No BS
         </div>
 
         {/* Headline */}
         <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-8">
-          Small apps.{' '}
+          Your idea.{' '}
           <span className="relative">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F97316] via-[#EC4899] to-[#8B5CF6]">
-              Real problems.
+              Shipped fast.
             </span>
           </span>
           <br />
@@ -27,23 +27,23 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className="text-lg md:text-xl text-white/40 max-w-2xl mx-auto mb-12 leading-relaxed">
-          A collection of micro-SaaS apps built by one developer who got tired of
-          waiting for someone else to make the right tool.
+          I'm a freelance developer who takes ideas from a rough sketch to a working
+          MVP — clear communication, AWS-heavy cloud work, and code that doesn't fall over.
         </p>
 
         {/* CTAs */}
         <div className="flex flex-wrap items-center justify-center gap-4">
           <a
-            href="#projects"
+            href="mailto:jayeshmotwani99@gmail.com"
             className="px-8 py-3.5 rounded-full bg-[#F97316] text-black font-bold text-sm hover:bg-[#fb923c] transition-colors"
           >
-            See the apps
+            Let's talk
           </a>
           <a
-            href="#about"
+            href="#work"
             className="px-8 py-3.5 rounded-full border border-white/10 text-white/70 text-sm hover:border-white/30 hover:text-white transition-colors"
           >
-            Who made this?
+            See the work
           </a>
         </div>
       </div>

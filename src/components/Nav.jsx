@@ -9,8 +9,9 @@ export default function Nav() {
           </span>
         </a>
         <nav className="flex items-center gap-8">
-          <a href="#about" className="text-sm text-white/50 hover:text-white transition-colors">About</a>
-          <a href="#projects" className="text-sm text-white/50 hover:text-white transition-colors">Projects</a>
+          <a href="#expertise" className="text-sm text-white/50 hover:text-white transition-colors">Expertise</a>
+          <a href="#process" className="text-sm text-white/50 hover:text-white transition-colors">Process</a>
+          <a href="#work" className="text-sm text-white/50 hover:text-white transition-colors">Work</a>
           <a
             href="mailto:jayeshmotwani99@gmail.com"
             className="text-sm px-4 py-1.5 rounded-full border border-[#F97316]/40 text-[#F97316] hover:bg-[#F97316]/10 transition-colors"
