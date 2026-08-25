@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || ''
+const WEB3FORMS_ACCESS_KEY = 'f3722a90-3011-42bf-aba5-4dd1770f1849'
 
 export default function LeadModal({ isOpen, onClose }) {
   const [name, setName] = useState('')
