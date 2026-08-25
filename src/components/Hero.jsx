@@ -1,4 +1,4 @@
-export default function Hero() {
+export default function Hero({ onOpenLeadModal }) {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-16 overflow-hidden">
       {/* Ambient glow blobs */}
@@ -33,12 +33,12 @@ export default function Hero() {
 
         {/* CTAs */}
         <div className="flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="mailto:jayeshmotwani99@gmail.com"
+          <button
+            onClick={onOpenLeadModal}
             className="px-8 py-3.5 rounded-full bg-[#F97316] text-black font-bold text-sm hover:bg-[#fb923c] transition-colors"
           >
             Let's talk
-          </a>
+          </button>
           <a
             href="#work"
             className="px-8 py-3.5 rounded-full border border-white/10 text-white/70 text-sm hover:border-white/30 hover:text-white transition-colors"

@@ -1,4 +1,4 @@
-export default function Nav() {
+export default function Nav({ onOpenLeadModal }) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#0a0a0a]/80 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -13,12 +13,12 @@ export default function Nav() {
           <a href="#expertise" className="text-sm text-white/50 hover:text-white transition-colors">Expertise</a>
           <a href="#process" className="text-sm text-white/50 hover:text-white transition-colors">Process</a>
           <a href="#work" className="text-sm text-white/50 hover:text-white transition-colors">Work</a>
-          <a
-            href="mailto:jayeshmotwani99@gmail.com"
+          <button
+            onClick={onOpenLeadModal}
             className="text-sm px-4 py-1.5 rounded-full border border-[#F97316]/40 text-[#F97316] hover:bg-[#F97316]/10 transition-colors"
           >
             Say hi
-          </a>
+          </button>
         </nav>
       </div>
     </header>
