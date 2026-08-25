@@ -22,7 +22,7 @@ const steps = [
   },
 ]
 
-export default function Process() {
+export default function Process({ onOpenLeadModal }) {
   return (
     <section id="process" className="py-32 px-6">
       <div className="max-w-6xl mx-auto">
@@ -63,12 +63,12 @@ export default function Process() {
             <p className="text-lg font-bold text-white mb-1">Not sure what "MVP" even means for your idea yet?</p>
             <p className="text-sm text-white/40">That's exactly what the first call is for. No cost, no pressure.</p>
           </div>
-          <a
-            href="mailto:jayeshmotwani99@gmail.com"
+          <button
+            onClick={onOpenLeadModal}
             className="shrink-0 px-6 py-3 rounded-full bg-[#F97316] text-black font-bold text-sm hover:bg-[#fb923c] transition-colors"
           >
             Book a call
-          </a>
+          </button>
         </div>
       </div>
     </section>
