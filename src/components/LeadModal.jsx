@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 
 const WEB3FORMS_ACCESS_KEY = 'f3722a90-3011-42bf-aba5-4dd1770f1849'
 
-export default function LeadModal({ isOpen, onClose }) {
+export default function LeadModal({ isOpen, onClose, onOpenPrivacy }) {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [botcheck, setBotcheck] = useState('')
+  const [consent, setConsent] = useState(false)
   const [status, setStatus] = useState('idle') // idle | submitting | success | error
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -29,6 +30,7 @@ export default function LeadModal({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (botcheck) return // honeypot tripped
+    if (!consent) return
 
     setStatus('submitting')
     setErrorMessage('')
@@ -65,6 +67,7 @@ export default function LeadModal({ isOpen, onClose }) {
       setName('')
       setEmail('')
       setBotcheck('')
+      setConsent(false)
       setStatus('idle')
       setErrorMessage('')
     }, 300)
@@ -147,6 +150,27 @@ export default function LeadModal({ isOpen, onClose }) {
                   className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/20 focus:outline-none focus:border-[#F97316]/50 transition-colors"
                 />
               </div>
+
+              <label className="flex items-start gap-2.5 text-xs text-white/40 leading-relaxed cursor-pointer">
+                <input
+                  type="checkbox"
+                  required
+                  checked={consent}
+                  onChange={(e) => setConsent(e.target.checked)}
+                  className="mt-0.5 accent-[#F97316]"
+                />
+                <span>
+                  I agree to let CodeCrumbs use my name and email to respond to this inquiry, per the{' '}
+                  <button
+                    type="button"
+                    onClick={onOpenPrivacy}
+                    className="text-[#F97316] hover:underline"
+                  >
+                    Privacy Policy
+                  </button>
+                  .
+                </span>
+              </label>
 
               {status === 'error' && (
                 <p className="text-sm text-red-400">{errorMessage}</p>

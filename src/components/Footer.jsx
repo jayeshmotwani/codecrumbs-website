@@ -1,4 +1,4 @@
-export default function Footer() {
+export default function Footer({ onOpenLegalModal }) {
   const year = new Date().getFullYear()
 
   return (
@@ -66,9 +66,23 @@ export default function Footer() {
           <p className="text-xs text-white/20">
             © {year} CodeCrumbs. Built with React + Tailwind. Deployed on the internet, somehow.
           </p>
-          <p className="text-xs text-white/20">
-            No cookies, no tracking, just code.
-          </p>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => onOpenLegalModal('privacy')}
+              className="text-xs text-white/20 hover:text-white/50 transition-colors"
+            >
+              Privacy Policy
+            </button>
+            <button
+              onClick={() => onOpenLegalModal('terms')}
+              className="text-xs text-white/20 hover:text-white/50 transition-colors"
+            >
+              Terms of Use
+            </button>
+            <p className="text-xs text-white/20">
+              No cookies, no trackers — just what you send us.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
