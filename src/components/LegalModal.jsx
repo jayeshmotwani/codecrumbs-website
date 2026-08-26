@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 
 const LAST_UPDATED = 'August 26, 2026'
-const CONTACT_EMAIL = 'jayeshmotwani99@gmail.com'
+const CONTACT_EMAIL = 'jayeshbydefault@gmail.com'
 
 function PrivacyContent() {
   return (

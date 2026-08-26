@@ -19,10 +19,10 @@ export default function Footer({ onOpenLegalModal }) {
           <div className="flex flex-col gap-3">
             <p className="text-xs text-white/25 uppercase tracking-widest">Get in touch</p>
             <a
-              href="mailto:jayeshmotwani99@gmail.com"
+              href="mailto:jayeshbydefault@gmail.com"
               className="text-sm text-white/40 hover:text-[#F97316] transition-colors"
             >
-              jayeshmotwani99@gmail.com
+              jayeshbydefault@gmail.com
             </a>
             <a href="#work" className="text-sm text-white/40 hover:text-[#EC4899] transition-colors">
               See recent work
