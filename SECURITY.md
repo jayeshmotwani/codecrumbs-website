@@ -8,7 +8,7 @@ This is a fully static site with no backend, no user data, no authentication, an
 
 If you spot something (e.g. a dependency with a known CVE, a malicious script somehow introduced), please report it privately rather than opening a public issue.
 
-Email: **jayeshmotwani99@gmail.com**
+Email: **jayeshbydefault@gmail.com**
 
 Please include:
 - What you found
