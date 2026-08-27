@@ -23,6 +23,8 @@ import {
   logoMasterSvg,
   logoPngHtml,
   thumbnailHtml,
+  challengeThumbHtml,
+  CHALLENGE_THUMBS,
 } from './templates.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -151,6 +153,17 @@ function buildThumbnail() {
     '--window-size=1600,900',
   ]);
   console.log('thumb->', 'thumbnail/github-7-day-challenge-thumbnail.png');
+
+  /* title-free alternates (GitHub mark + challenge motif) — the Nas.io
+     listing overlays its own title card, so these carry no headline. */
+  for (const v of CHALLENGE_THUMBS) {
+    const alt = join(OUT.thumb, `github-7-day-challenge-thumbnail-${v}.png`);
+    render(challengeThumbHtml(css, v, { w: 1600, h: 900 }), [
+      `--screenshot=${alt}`,
+      '--window-size=1600,900',
+    ]);
+    console.log('thumb->', `thumbnail/github-7-day-challenge-thumbnail-${v}.png`);
+  }
 }
 
 /* ── main ───────────────────────────────────────────────────────────*/

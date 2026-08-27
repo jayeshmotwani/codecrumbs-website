@@ -12,7 +12,8 @@ products/github-7-day-challenge/
 ├── pdfs/            7 section PDFs — v1, gradient-rich (reference only)
 ├── pdfs-v2/         7 section PDFs — v2, flat & fast   ← SHIP THIS
 ├── logo/            codecrumbs-logo.svg + -512.png + -1024.png  ← deliverable
-├── thumbnail/       github-7-day-challenge-thumbnail.png (1600×900)  ← deliverable
+├── thumbnail/       github-7-day-challenge-thumbnail.png (1600×900, titled)  ← deliverable
+│                    + -octocat / -streak / -terminal / -ascend / -badge  (title-free alts)
 └── src/             design system + generator (edit here, then rebuild)
     ├── theme.css        brand tokens (colours, gradient, glow, fonts)
     ├── fonts.css        @font-face for the self-hosted woff2 files
@@ -91,6 +92,17 @@ orange "C", CodeCrumbs wordmark, orange accents on `#0a0a0a`. **Ship `pdfs-v2/`.
 wordmark + progress rail as the covers, with the challenge title and full tagline
 baked in and a large translucent "C" watermark.
 
+**Title-free thumbnails (`templates.mjs` → `challengeThumbHtml`, slugs in
+`CHALLENGE_THUMBS`)** — the Nas.io listing overlays its own title card over the
+thumbnail, so these carry **no headline**. Each keeps the Code Crumbs brand
+lock-up + a Day 1→7 rail, adds the GitHub mark (`githubMarkSvg`, official
+Invertocat path, recoloured monochrome), and leans into a "challenge" motif:
+- `-octocat` — hero GitHub mark + an oversized gradient **7 / DAYS**
+- `-streak` — a 7-cell contribution-style row, "one unbroken streak"
+- `-terminal` — a mock `gh challenge` run with days 1–3 done, day 4 "your move"
+- `-ascend` — 7 bars climbing left→right, GitHub mark at the summit
+- `-badge` — an achievement crest: GitHub mark in a gradient ring with 7 ticks
+
 ## Regenerate
 
 Requires **Node** and **Google Chrome** (auto-detected; override with `CHROME_BIN`).
@@ -102,7 +114,7 @@ node src/build.mjs            # everything (v1 + v2 PDFs, logo, thumbnail)
 node src/build.mjs pdfs       # just the 7 section PDFs — v1 (pdf.css → pdfs/)
 node src/build.mjs pdfs-v2    # just the 7 section PDFs — v2 (pdf-v2.css → pdfs-v2/)
 node src/build.mjs logo       # just codecrumbs-logo .svg / -512 / -1024
-node src/build.mjs thumbnail  # just the thumbnail PNG
+node src/build.mjs thumbnail  # titled thumbnail + the 5 title-free alts
 ```
 
 ### Change a section's content
