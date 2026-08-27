@@ -378,3 +378,211 @@ ${ctBaseCss(w, h)}</style></head><body>
   <div class="t v-${variant}"><div class="t__glow"></div><div class="t__in">${inner}</div></div>
 </body></html>`;
 }
+
+/* ── Square ad images (1080×1080, Instagram-post) ─────────────────────
+ * Unlike the thumbnails these DO carry a headline + CTA — they are paid
+ * social ads, not the Nas.io listing image. Colour is free-range here:
+ * each variant sets its own local palette, but every one keeps the Code
+ * Crumbs wordmark + the GitHub mark so the product still reads.
+ * build.mjs renders one PNG per slug in AD_IMAGES. */
+export const AD_IMAGES = ['gradient', 'transform', 'checklist', 'seven', 'profile'];
+
+/* deterministic mock contribution grid */
+const adGrid = (cols, rows, density, seed) => {
+  let out = '';
+  for (let r = 0; r < rows; r++)
+    for (let c = 0; c < cols; c++) {
+      const v = ((c * 7 + r * 13 + seed * 5) % 10) / 10;
+      out += v < density ? `<i class="on l${Math.min(3, Math.floor(v * 6))}"></i>` : '<i></i>';
+    }
+  return out;
+};
+
+const adBaseCss = (s) => `
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:${s}px;height:${s}px;overflow:hidden}
+  .ad{position:relative;width:${s}px;height:${s}px;overflow:hidden;
+    font-family:var(--cc-font);color:#fff;display:flex;flex-direction:column;padding:78px}
+  .ad>*{position:relative;z-index:1}
+  .ad svg{display:block}
+  .ad__bg{position:absolute;inset:0;z-index:0}
+  .arow{display:flex;align-items:center;justify-content:space-between}
+  .cc{display:flex;align-items:center;gap:13px}
+  .cc-wordmark{font-size:25px;font-weight:700}
+  .cc-wordmark .a{color:var(--cc-orange)}.cc-wordmark .b{color:#fff}
+  .ad .pill{display:inline-flex;align-items:center;gap:10px;padding:10px 19px;border-radius:999px;
+    font-size:14px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+    border:1px solid rgba(255,255,255,.24);color:rgba(255,255,255,.9);white-space:nowrap}
+  .ad .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--cc-orange)}
+  .grad-txt{background:var(--cc-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .mid{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .cta{display:inline-flex;align-items:center;gap:12px;padding:19px 30px;border-radius:15px;
+    font-size:23px;font-weight:800;letter-spacing:-.01em;color:#0a0a0a;background:#fff;align-self:flex-start}
+  .cta svg{width:22px;height:22px}
+  .adfoot{display:flex;justify-content:space-between;align-items:baseline;font-size:16px;opacity:.62;margin-top:24px}
+  .grid{display:grid;gap:5px}
+  .grid i{aspect-ratio:1;border-radius:3px;background:rgba(255,255,255,.07)}
+  .grid i.on{background:var(--cc-gradient)}
+  .grid i.on.l0{opacity:.42}.grid i.on.l1{opacity:.64}.grid i.on.l2{opacity:.82}.grid i.on.l3{opacity:1}
+
+  /* 1 · gradient — hook + CTA */
+  .v-gradient .ad__bg{background:
+    radial-gradient(58% 52% at 10% 6%,rgba(249,115,22,.34),transparent 70%),
+    radial-gradient(60% 60% at 94% 96%,rgba(139,92,246,.38),transparent 72%),
+    radial-gradient(74% 52% at 62% 52%,rgba(236,72,153,.18),transparent 74%),#0a0a0a}
+  .v-gradient .octo{position:absolute;right:-90px;bottom:-90px;opacity:.08}
+  .v-gradient h1{font-size:76px;line-height:1.05;font-weight:800;letter-spacing:-.025em}
+  .v-gradient p{margin-top:30px;font-size:25px;line-height:1.52;color:rgba(255,255,255,.72);max-width:760px}
+  .v-gradient .cta{margin-top:46px;background:var(--cc-gradient)}
+
+  /* 2 · transform — before / after */
+  .v-transform .ad__bg{background:radial-gradient(60% 60% at 88% 92%,rgba(139,92,246,.26),transparent 70%),
+    radial-gradient(50% 50% at 8% 8%,rgba(249,115,22,.16),transparent 72%),#0a0a0a}
+  .v-transform h1{font-size:48px;font-weight:800;letter-spacing:-.02em;line-height:1.12;margin-top:30px}
+  .v-transform .cmp{display:flex;align-items:center;gap:22px;margin:auto 0 0}
+  .v-transform .sell{text-align:center;font-size:22px;color:rgba(255,255,255,.66);margin:24px 0 0}
+  .v-transform .sell b{color:#fff;font-weight:700}
+  .v-transform .cta{margin-top:auto;background:var(--cc-gradient)}
+  .v-transform .card{flex:1;border-radius:22px;padding:30px;border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.03);display:flex;flex-direction:column;gap:20px}
+  .v-transform .card h2{font-size:19px;letter-spacing:.16em;text-transform:uppercase}
+  .v-transform .card.before h2{color:rgba(255,255,255,.42)}
+  .v-transform .card.after h2{background:var(--cc-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .v-transform .card .grid{grid-template-columns:repeat(12,1fr)}
+  .v-transform .card.before .grid i.on{background:rgba(255,255,255,.15);opacity:1}
+  .v-transform .card p{font-size:17px;line-height:1.45;color:rgba(255,255,255,.62)}
+  .v-transform .arrow{color:rgba(255,255,255,.5)}
+  .v-transform .arrow svg{width:46px;height:46px}
+
+  /* 3 · checklist — the syllabus, teal accent */
+  .v-checklist .ad__bg{background:
+    radial-gradient(66% 56% at 12% 8%,rgba(34,211,238,.18),transparent 70%),
+    radial-gradient(58% 58% at 92% 96%,rgba(249,115,22,.16),transparent 72%),#0a0d16}
+  .v-checklist h1{font-size:45px;font-weight:800;letter-spacing:-.02em;line-height:1.12}
+  .v-checklist ul{list-style:none;margin:34px 0 0;display:flex;flex-direction:column;gap:14px}
+  .v-checklist li{display:flex;align-items:center;gap:17px;font-size:22px;font-weight:500;color:rgba(255,255,255,.92)}
+  .v-checklist .n{flex:none;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;
+    justify-content:center;font-size:16px;font-weight:800;background:rgba(34,211,238,.14);color:#22d3ee}
+  .v-checklist .cta{margin-top:40px;background:#22d3ee}
+
+  /* 4 · seven — bold electric gradient bg */
+  .v-seven .ad__bg{background:linear-gradient(150deg,#2563eb 0%,#7c3aed 52%,#db2777 100%)}
+  .v-seven .mid{flex-direction:row;align-items:center;gap:34px}
+  .v-seven .big{font-size:400px;font-weight:800;line-height:.74;letter-spacing:-.06em;color:#fff}
+  .v-seven .stack{font-size:58px;font-weight:800;line-height:1.04;letter-spacing:-.02em;text-transform:uppercase}
+  .v-seven .octo{position:absolute;right:-40px;top:-30px;opacity:.16}
+  .v-seven .cta{background:#facc15}
+  .v-seven .pill{border-color:rgba(255,255,255,.45)}
+  .v-seven .adfoot{opacity:.85}
+
+  /* 5 · profile — GitHub-dark mock card, green accent */
+  .v-profile .ad__bg{background:radial-gradient(58% 52% at 86% 10%,rgba(46,160,67,.24),transparent 70%),
+    radial-gradient(46% 46% at 6% 96%,rgba(88,166,255,.14),transparent 74%),#0a0a0a}
+  .v-profile h1{font-size:40px;font-weight:800;letter-spacing:-.02em;line-height:1.18;margin-top:26px}
+  .v-profile h1 .g{color:#3fb950}
+  .v-profile .pcard{margin-top:26px;border-radius:20px;background:#0d1117;border:1px solid #30363d;
+    padding:26px;display:flex;flex-direction:column;gap:16px}
+  .v-profile .phead{display:flex;align-items:center;gap:16px}
+  .v-profile .phead svg{margin-left:auto}
+  .v-profile .pav{width:66px;height:66px;border-radius:50%;background:var(--cc-gradient)}
+  .v-profile .pname{font-size:22px;font-weight:700}
+  .v-profile .pname span{display:block;font-size:15px;font-weight:400;color:#8b949e;margin-top:3px}
+  .v-profile .repos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .v-profile .repo{border:1px solid #30363d;border-radius:11px;padding:14px 16px;font-size:16px;color:#58a6ff;font-weight:600}
+  .v-profile .repo span{display:block;font-size:13px;color:#8b949e;font-weight:400;margin-top:4px}
+  .v-profile .grid{grid-template-columns:repeat(20,1fr);gap:4px}
+  .v-profile .grid i.on{background:#2ea043}
+  .v-profile .cta{margin-top:26px;background:#3fb950}
+`;
+
+export function adImageHtml(css, variant, { size = 1080 } = {}) {
+  const brand = `<div class="cc">${markSvg({ px: 44, frame: true, id: `ad-${variant}` })}${wordmark()}</div>`;
+  const arrow = `<svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const items = [
+    'Set up Git & GitHub the right way',
+    'The handful of commands devs really use',
+    'Create & manage your first repository',
+    'Put a real project online — with a README',
+    'Branching, without the confusion',
+    'Fork & open your first pull request',
+    'A profile that recruiters trust',
+  ];
+  const repos = [
+    ['portfolio-site', 'Personal site'],
+    ['weather-cli', 'First Python project'],
+    ['recipe-box', 'React practice'],
+    ['your-username', 'Profile README'],
+  ];
+
+  const V = {
+    gradient: `
+      <div class="arow">${brand}<span class="pill"><span class="dot"></span>Free &middot; 7 days</span></div>
+      <div class="octo">${githubMarkSvg({ px: 620 })}</div>
+      <div class="mid">
+        <h1>Zero to a GitHub profile<br>that gets you <span class="grad-txt">hired</span>.</h1>
+        <p>One small Git skill a day. By Day 7 &mdash; real projects, a clean commit history, and a profile README you can put on your resume.</p>
+        <div class="cta">Start the free challenge ${arrow}</div>
+      </div>
+      <div class="adfoot"><span>codecrumbs.in</span><span>The GitHub 7-Day Challenge</span></div>`,
+
+    transform: `
+      <div class="arow">${brand}<span class="pill"><span class="dot"></span>7-day glow-up</span></div>
+      <h1>Seven days. Same you.<br><span class="grad-txt">A GitHub that gets noticed.</span></h1>
+      <div class="cmp">
+        <div class="card before">
+          <h2>Day 1</h2>
+          <div class="grid">${adGrid(12, 7, 0.12, 3)}</div>
+          <p>Empty profile. Nothing pinned. One &ldquo;test&rdquo; repo.</p>
+        </div>
+        <span class="arrow">${arrow}</span>
+        <div class="card after">
+          <h2>Day 7</h2>
+          <div class="grid">${adGrid(12, 7, 0.82, 6)}</div>
+          <p>Real projects pinned. Green streak. Profile README.</p>
+        </div>
+      </div>
+      <p class="sell">Same effort. A profile that finally <b>looks the part</b>.</p>
+      <div class="cta">Take the challenge ${arrow}</div>
+      <div class="adfoot"><span>codecrumbs.in</span><span>Free &middot; 10&ndash;20 min a day</span></div>`,
+
+    checklist: `
+      <div class="arow">${brand}<span class="pill"><span class="dot"></span>The syllabus</span></div>
+      <div class="mid">
+        <h1>What you&rsquo;ll actually<br>learn in <span class="grad-txt">7 days</span></h1>
+        <ul>${items.map((t, i) => `<li><span class="n">${i + 1}</span>${esc(t)}</li>`).join('')}</ul>
+        <div class="cta">Join free ${arrow}</div>
+      </div>
+      <div class="adfoot"><span>codecrumbs.in</span><span>The GitHub 7-Day Challenge</span></div>`,
+
+    seven: `
+      <div class="arow">${brand}<span class="pill"><span class="dot"></span>Zero experience needed</span></div>
+      <div class="octo">${githubMarkSvg({ px: 380, fill: '#fff' })}</div>
+      <div class="mid">
+        <span class="big">7</span>
+        <span class="stack">Days to<br>portfolio-<br>ready</span>
+      </div>
+      <div class="cta">Start today &mdash; it&rsquo;s free ${arrow}</div>
+      <div class="adfoot"><span>codecrumbs.in</span><span>One Git skill a day</span></div>`,
+
+    profile: `
+      <div class="arow">${brand}<span class="pill"><span class="dot"></span>Before / after</span></div>
+      <div class="mid">
+        <h1>Most beginners have a messy GitHub.<br><span class="g">In one week, yours won&rsquo;t.</span></h1>
+        <div class="pcard">
+          <div class="phead"><div class="pav"></div><div class="pname">Your Name<span>@your-username &middot; 7-day streak</span></div>${githubMarkSvg({ px: 38, fill: '#8b949e' })}</div>
+          <div class="repos">${repos.map(([a, b]) => `<div class="repo">${esc(a)}<span>${esc(b)}</span></div>`).join('')}</div>
+          <div class="grid">${adGrid(20, 6, 0.62, 4)}</div>
+        </div>
+        <div class="cta">Start the challenge ${arrow}</div>
+      </div>
+      <div class="adfoot"><span>codecrumbs.in</span><span>Free &middot; 10&ndash;20 min a day</span></div>`,
+  };
+
+  const inner = V[variant] || V.gradient;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>${esc(challenge.title)} — ad (${esc(variant)})</title>
+<style>${css}
+${adBaseCss(size)}</style></head><body>
+  <div class="ad v-${variant}"><div class="ad__bg"></div>${inner}</div>
+</body></html>`;
+}

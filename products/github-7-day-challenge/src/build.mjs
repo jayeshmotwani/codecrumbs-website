@@ -5,7 +5,8 @@
  *   node src/build.mjs pdfs       # just the 7 section PDFs (v1, pdf.css)
  *   node src/build.mjs pdfs-v2    # just the 7 section PDFs (v2, pdf-v2.css — flat, fast)
  *   node src/build.mjs logo       # just the logo (SVG + 512 + 1024 PNG)
- *   node src/build.mjs thumbnail  # just the Nas.io thumbnail PNG
+ *   node src/build.mjs thumbnail  # Nas.io thumbnail + the 5 title-free alts
+ *   node src/build.mjs ads        # just the 5 square ad images (1080×1080)
  *
  * Rendering engine: headless Google Chrome (no npm install needed).
  * Set CHROME_BIN to override the auto-detected Chrome path.
@@ -25,6 +26,8 @@ import {
   thumbnailHtml,
   challengeThumbHtml,
   CHALLENGE_THUMBS,
+  adImageHtml,
+  AD_IMAGES,
 } from './templates.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -35,6 +38,7 @@ const OUT = {
   pdfsV2: join(ROOT, 'pdfs-v2'),
   logo: join(ROOT, 'logo'),
   thumb: join(ROOT, 'thumbnail'),
+  ads: join(ROOT, 'ads'),
 };
 
 /* ── locate Chrome ─────────────────────────────────────────────────────*/
@@ -166,6 +170,20 @@ function buildThumbnail() {
   }
 }
 
+/* ── Ad images (square 1080×1080, for paid social) ───────────────────*/
+function buildAds() {
+  mkdirSync(OUT.ads, { recursive: true });
+  const css = bundleCss('theme.css', 'fonts.css');
+  for (const v of AD_IMAGES) {
+    const p = join(OUT.ads, `github-7-day-challenge-ad-${v}.png`);
+    render(adImageHtml(css, v, { size: 1080 }), [
+      `--screenshot=${p}`,
+      '--window-size=1080,1080',
+    ]);
+    console.log('ad   ->', `ads/github-7-day-challenge-ad-${v}.png`);
+  }
+}
+
 /* ── main ───────────────────────────────────────────────────────────*/
 const task = process.argv[2] || 'all';
 try {
@@ -173,6 +191,7 @@ try {
   if (task === 'all' || task === 'pdfs-v2') buildPdfsV2();
   if (task === 'all' || task === 'logo') buildLogo();
   if (task === 'all' || task === 'thumbnail') buildThumbnail();
+  if (task === 'all' || task === 'ads') buildAds();
   console.log('\ndone. Chrome:', CHROME);
 } finally {
   rmSync(work, { recursive: true, force: true });

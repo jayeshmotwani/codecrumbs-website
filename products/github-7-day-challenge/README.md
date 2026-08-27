@@ -14,6 +14,8 @@ products/github-7-day-challenge/
 ├── logo/            codecrumbs-logo.svg + -512.png + -1024.png  ← deliverable
 ├── thumbnail/       github-7-day-challenge-thumbnail.png (1600×900, titled)  ← deliverable
 │                    + -octocat / -streak / -terminal / -ascend / -badge  (title-free alts)
+├── ads/             5 square 1080×1080 paid-social ad images  ← deliverable
+│                    -gradient / -transform / -checklist / -seven / -profile
 └── src/             design system + generator (edit here, then rebuild)
     ├── theme.css        brand tokens (colours, gradient, glow, fonts)
     ├── fonts.css        @font-face for the self-hosted woff2 files
@@ -103,6 +105,16 @@ Invertocat path, recoloured monochrome), and leans into a "challenge" motif:
 - `-ascend` — 7 bars climbing left→right, GitHub mark at the summit
 - `-badge` — an achievement crest: GitHub mark in a gradient ring with 7 ticks
 
+**Ad images (`templates.mjs` → `adImageHtml`, slugs in `AD_IMAGES`)** — square
+1080×1080 for paid social. Unlike the thumbnails these **do** carry a headline
++ CTA. Colour is free-range per variant (each sets its own local palette) but
+every one keeps the Code Crumbs wordmark + the GitHub mark:
+- `-gradient` — "Zero to a GitHub profile that gets you hired", brand-gradient CTA
+- `-transform` — Day 1 vs Day 7 contribution-grid cards, before/after
+- `-checklist` — the 7-item syllabus, teal accent
+- `-seven` — a giant **7** on an electric blue→violet→pink gradient, yellow CTA
+- `-profile` — a GitHub-dark mock profile card (placeholder `@your-username`), green accent
+
 ## Regenerate
 
 Requires **Node** and **Google Chrome** (auto-detected; override with `CHROME_BIN`).
@@ -115,6 +127,7 @@ node src/build.mjs pdfs       # just the 7 section PDFs — v1 (pdf.css → pdfs
 node src/build.mjs pdfs-v2    # just the 7 section PDFs — v2 (pdf-v2.css → pdfs-v2/)
 node src/build.mjs logo       # just codecrumbs-logo .svg / -512 / -1024
 node src/build.mjs thumbnail  # titled thumbnail + the 5 title-free alts
+node src/build.mjs ads        # just the 5 square ad images (1080×1080)
 ```
 
 ### Change a section's content
