@@ -78,7 +78,8 @@ self-contained and never imported by `src/`.
 - `adImageHtml` is the opposite case — these are paid ads, so headline + CTA are
   wanted. Keep them square (1080), keep the Code Crumbs wordmark + GitHub mark,
   and keep the `@your-username` profile mock a clear placeholder (never a real
-  handle). Deliverables live in `ads/`.
+  handle). **Do not state a price or call it "free"** — the ads carry the start
+  date ("Starts 1 Sept 2026") instead. Deliverables live in `ads/`.
 - Deliverables (`pdfs/`, `pdfs-v2/`, `logo/`, `thumbnail/`, `ads/`) are committed.
   `build/` is scratch and git-ignored.
 - When editing PDF layout, change `pdf.css` and `pdf-v2.css` together so v1/v2

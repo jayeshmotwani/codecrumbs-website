@@ -516,12 +516,12 @@ export function adImageHtml(css, variant, { size = 1080 } = {}) {
 
   const V = {
     gradient: `
-      <div class="arow">${brand}<span class="pill"><span class="dot"></span>Free &middot; 7 days</span></div>
+      <div class="arow">${brand}<span class="pill"><span class="dot"></span>Starts 1 Sept 2026</span></div>
       <div class="octo">${githubMarkSvg({ px: 620 })}</div>
       <div class="mid">
         <h1>Zero to a GitHub profile<br>that gets you <span class="grad-txt">hired</span>.</h1>
         <p>One small Git skill a day. By Day 7 &mdash; real projects, a clean commit history, and a profile README you can put on your resume.</p>
-        <div class="cta">Start the free challenge ${arrow}</div>
+        <div class="cta">Join the challenge ${arrow}</div>
       </div>
       <div class="adfoot"><span>codecrumbs.in</span><span>The GitHub 7-Day Challenge</span></div>`,
 
@@ -543,16 +543,16 @@ export function adImageHtml(css, variant, { size = 1080 } = {}) {
       </div>
       <p class="sell">Same effort. A profile that finally <b>looks the part</b>.</p>
       <div class="cta">Take the challenge ${arrow}</div>
-      <div class="adfoot"><span>codecrumbs.in</span><span>Free &middot; 10&ndash;20 min a day</span></div>`,
+      <div class="adfoot"><span>codecrumbs.in</span><span>Starts 1 Sept 2026 &middot; 10&ndash;20 min a day</span></div>`,
 
     checklist: `
       <div class="arow">${brand}<span class="pill"><span class="dot"></span>The syllabus</span></div>
       <div class="mid">
         <h1>What you&rsquo;ll actually<br>learn in <span class="grad-txt">7 days</span></h1>
         <ul>${items.map((t, i) => `<li><span class="n">${i + 1}</span>${esc(t)}</li>`).join('')}</ul>
-        <div class="cta">Join free ${arrow}</div>
+        <div class="cta">Save your spot ${arrow}</div>
       </div>
-      <div class="adfoot"><span>codecrumbs.in</span><span>The GitHub 7-Day Challenge</span></div>`,
+      <div class="adfoot"><span>codecrumbs.in</span><span>Starts 1 Sept 2026</span></div>`,
 
     seven: `
       <div class="arow">${brand}<span class="pill"><span class="dot"></span>Zero experience needed</span></div>
@@ -561,8 +561,8 @@ export function adImageHtml(css, variant, { size = 1080 } = {}) {
         <span class="big">7</span>
         <span class="stack">Days to<br>portfolio-<br>ready</span>
       </div>
-      <div class="cta">Start today &mdash; it&rsquo;s free ${arrow}</div>
-      <div class="adfoot"><span>codecrumbs.in</span><span>One Git skill a day</span></div>`,
+      <div class="cta">Save your spot ${arrow}</div>
+      <div class="adfoot"><span>codecrumbs.in</span><span>Starts 1 Sept 2026</span></div>`,
 
     profile: `
       <div class="arow">${brand}<span class="pill"><span class="dot"></span>Before / after</span></div>
@@ -575,7 +575,7 @@ export function adImageHtml(css, variant, { size = 1080 } = {}) {
         </div>
         <div class="cta">Start the challenge ${arrow}</div>
       </div>
-      <div class="adfoot"><span>codecrumbs.in</span><span>Free &middot; 10&ndash;20 min a day</span></div>`,
+      <div class="adfoot"><span>codecrumbs.in</span><span>Starts 1 Sept 2026 &middot; 10&ndash;20 min a day</span></div>`,
   };
 
   const inner = V[variant] || V.gradient;
