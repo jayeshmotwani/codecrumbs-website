@@ -43,6 +43,8 @@ src/
   index.css
 public/
   assets/         # logo files used on the page
+products/
+  github-7-day-challenge/   # Nas.io challenge assets (PDFs, logo, thumbnail) + generator
 ```
 
 ## Apps featured
