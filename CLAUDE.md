@@ -33,6 +33,10 @@ npm run preview   # preview production build
 - `src/components/` — one file per section (Nav, Hero, About, Projects, Footer)
 - `public/assets/` — logo PNGs/SVGs served statically; reference as `/assets/filename`
 - `index.html` — Vite entry point
+- `products/` — standalone brand deliverables, not part of the Vite build (never
+  imported by `src/`). Each subfolder is self-contained with its own README +
+  CLAUDE.md. See `products/github-7-day-challenge/` (Nas.io challenge: 7 section
+  PDFs, logo exports, thumbnail — generated from the site's brand tokens).
 
 ## What to avoid
 
