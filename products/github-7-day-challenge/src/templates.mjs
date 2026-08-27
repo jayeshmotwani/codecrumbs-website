@@ -46,11 +46,19 @@ const sparkSvg = `<svg class="spark" viewBox="0 0 24 24" fill="none" xmlns="http
 
 const checkBadgeSvg = `<svg class="checkpoint__badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="cbg" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#F97316"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="12" cy="12" r="11" fill="url(#cbg)"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#0A0A0A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
+/* Flat variant (v2) — solid orange, no <linearGradient> so print-to-pdf emits
+   a plain vector fill instead of a shading pattern. */
+const checkBadgeSvgFlat = `<svg class="checkpoint__badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="11" fill="#F97316"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#0A0A0A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
 const lockSvg = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="10.5" width="16" height="11" rx="2.5" stroke="#8B5CF6" stroke-width="1.8"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 
-/* ── One section PDF (cover page + body page) ────────────────────────────*/
-export function sectionPdfHtml(day, css) {
+/* ── One section PDF (cover page + body page) ────────────────────────────
+ * `opts.flat` (v2 build) swaps the gradient check badge for a solid one so
+ * the rendered PDF carries no shading patterns at all. Everything else is
+ * driven by the stylesheet passed in `css` (pdf.css vs pdf-v2.css). */
+export function sectionPdfHtml(day, css, opts = {}) {
   const { totalDays, brandTagline, title: cName } = challenge;
+  const badge = opts.flat ? checkBadgeSvgFlat : checkBadgeSvg;
 
   const cover = `
   <section class="page cover">
@@ -107,7 +115,7 @@ export function sectionPdfHtml(day, css) {
       ${commands}
 
       <div class="checkpoint">
-        <p class="checkpoint__head">${checkBadgeSvg}Day ${day.n} Checkpoint</p>
+        <p class="checkpoint__head">${badge}Day ${day.n} Checkpoint</p>
         <p>${rich(day.checkpoint)}</p>
         <p class="checkpoint__done"><span class="box"></span>Mark complete in the Challenge Feed${day.n < totalDays ? ` to unlock Day ${day.n + 1}` : ' to finish the challenge'}</p>
         ${unlock}
