@@ -42,6 +42,15 @@ export function markSvg({ px = 64, frame = true, id = 'm' } = {}) {
 const wordmark = (cls = '') =>
   `<span class="cc-wordmark ${cls}"><span class="a">Code</span><span class="b">Crumbs</span></span>`;
 
+/* ── GitHub mark (the "Invertocat") ──────────────────────────────────────
+ * Official GitHub logo path, viewBox 0 0 98 96, recoloured monochrome —
+ * GitHub's brand guidelines allow a solid one-colour version. Used on the
+ * alternative challenge thumbnails so the listing image reads "GitHub"
+ * without the covered-up title. */
+export function githubMarkSvg({ px = 96, fill = '#f5f5f5' } = {}) {
+  return `<svg width="${px}" height="${px}" viewBox="0 0 98 96" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GitHub"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.127 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="${fill}"/></svg>`;
+}
+
 const sparkSvg = `<svg class="spark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c.6 4.4 2.9 6.9 7 8-4.1 1.1-6.4 3.6-7 8-.6-4.4-2.9-6.9-7-8 4.1-1.1 6.4-3.6 7-8Z" fill="#F97316"/></svg>`;
 
 const checkBadgeSvg = `<svg class="checkpoint__badge" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="cbg" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#F97316"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><circle cx="12" cy="12" r="11" fill="url(#cbg)"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#0A0A0A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -196,5 +205,176 @@ export function thumbnailHtml(css, { w = 1600, h = 900 } = {}) {
     </div>
     <div class="thumb__foot"><span>codecrumbs.in</span><span class="tag">${esc(brandTagline)}</span></div>
   </div>
+</body></html>`;
+}
+
+/* ── Alternative Nas.io thumbnails (16:9, NO product title) ─────────────
+ * The Nas.io product page lays its own title card over the listing
+ * thumbnail, so any headline baked into the image gets covered. These
+ * variants drop the title, lean on the GitHub mark + a "challenge" motif,
+ * and keep only the Code Crumbs brand lock-up + a Day 1→7 rail.
+ * build.mjs renders one PNG per slug in CHALLENGE_THUMBS. */
+export const CHALLENGE_THUMBS = ['octocat', 'streak', 'terminal', 'ascend', 'badge'];
+
+const ctBaseCss = (w, h) => `
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:${w}px;height:${h}px;overflow:hidden}
+  .t{position:relative;width:${w}px;height:${h}px;background:var(--cc-bg);
+    font-family:var(--cc-font);color:var(--cc-text);overflow:hidden;display:flex}
+  .t__glow{position:absolute;inset:0;z-index:0;background:var(--cc-glow)}
+  .t__in{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding:76px 96px}
+  .t svg{display:block}
+  .cc{display:flex;align-items:center;gap:14px}
+  .cc-wordmark{font-size:23px;font-weight:700}
+  .cc-wordmark .a{color:var(--cc-orange)}.cc-wordmark .b{color:#fff}
+  .brandrow{display:flex;align-items:center;justify-content:space-between}
+  .octo-sm{opacity:.9}
+  .cc-foot{font-size:15px;color:var(--cc-text-3)}
+  .foot{display:flex;justify-content:space-between;align-items:baseline;font-size:15px;color:var(--cc-text-3)}
+  .foot .tag{font-style:italic}
+  .pill{display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border:1px solid var(--cc-hairline-strong);
+    border-radius:999px;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--cc-text-2);white-space:nowrap}
+  .pill .dot{width:8px;height:8px;border-radius:999px;background:var(--cc-orange)}
+  .grad{background:var(--cc-gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stage{flex:1;display:flex;align-items:center;justify-content:center}
+  .rail{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--cc-text-3);
+    letter-spacing:.14em;text-transform:uppercase}
+  .rail .seg{width:44px;height:5px;border-radius:999px;background:var(--cc-hairline-strong)}
+  .rail .seg.on{background:var(--cc-gradient)}
+
+  /* octocat: hero mark + oversized 7 */
+  .v-octocat .stage{gap:72px}
+  .v-octocat .octo{opacity:.94}
+  .v-octocat .lock{display:flex;align-items:center;gap:30px}
+  .v-octocat .seven{font-size:440px;font-weight:800;line-height:.76;letter-spacing:-.05em}
+  .v-octocat .unit{display:flex;flex-direction:column}
+  .v-octocat .unit b{font-size:66px;font-weight:800;letter-spacing:.03em}
+  .v-octocat .unit i{font-style:normal;font-size:19px;letter-spacing:.18em;text-transform:uppercase;color:var(--cc-text-2);margin-top:10px}
+  .v-octocat .rail{margin:0 0 22px}
+
+  /* streak: contribution-style row of 7 */
+  .v-streak .stage{flex-direction:column;align-items:flex-start;justify-content:center;gap:38px}
+  .v-streak .head{font-size:58px;font-weight:800;letter-spacing:-.02em;line-height:1.08}
+  .v-streak .cells{display:grid;grid-template-columns:repeat(7,1fr);gap:16px;width:100%}
+  .v-streak .cell{height:184px;border-radius:22px;background:var(--cc-gradient);padding:20px;
+    display:flex;flex-direction:column;justify-content:space-between}
+  .v-streak .cell .d{font-size:15px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(10,10,10,.78)}
+  .v-streak .cell .ck{align-self:flex-end}
+  .v-streak .sub{font-size:21px;color:var(--cc-text-2)}
+  .v-streak .sub b{color:var(--cc-text);font-weight:700}
+  .v-streak .brandrow+.stage{margin-top:6px}
+
+  /* terminal: streak in progress */
+  .v-terminal .win{width:1120px;border-radius:16px;background:#0c0c0c;border:1px solid var(--cc-hairline-strong);
+    overflow:hidden;box-shadow:0 40px 130px rgba(0,0,0,.55)}
+  .v-terminal .wbar{display:flex;align-items:center;gap:9px;padding:15px 20px;background:#151515;border-bottom:1px solid var(--cc-hairline)}
+  .v-terminal .wbar i{width:12px;height:12px;border-radius:50%;background:#2b2b2b}
+  .v-terminal .wbar span{margin-left:12px;font-family:var(--cc-mono);font-size:14px;color:var(--cc-text-3)}
+  .v-terminal pre{margin:0;padding:28px 34px 34px;font-family:var(--cc-mono);font-size:23px;line-height:1.8;white-space:pre}
+  .v-terminal .p{color:var(--cc-orange)}
+  .v-terminal .k{color:var(--cc-purple)}
+  .v-terminal .fl{color:var(--cc-text-3)}
+  .v-terminal .num{color:var(--cc-yellow)}
+  .v-terminal .ok{color:var(--cc-orange);font-weight:700}
+  .v-terminal .cur{color:var(--cc-pink)}
+  .v-terminal .mut{color:var(--cc-text-3)}
+
+  /* ascend: climb 7 bars */
+  .v-ascend .stage{position:relative;align-items:flex-end}
+  .v-ascend .bars{display:flex;align-items:flex-end;gap:26px}
+  .v-ascend .col{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .v-ascend .bar{width:116px;border-radius:14px 14px 4px 4px;background:var(--cc-gradient)}
+  .v-ascend .col span{font-size:15px;font-weight:700;letter-spacing:.1em;color:var(--cc-text-3)}
+  .v-ascend .octo-top{position:absolute;right:66px;bottom:456px;opacity:.92}
+  .v-ascend .asc-cap{font-size:25px;color:var(--cc-text-2);margin:28px 0 22px;letter-spacing:-.01em}
+
+  /* badge: achievement crest */
+  .v-badge .medal{position:relative;width:478px;height:478px;border-radius:50%}
+  .v-badge .ring{position:absolute;inset:0;border-radius:50%;padding:5px;background:var(--cc-gradient);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+  .v-badge .inner{position:absolute;inset:16px;border-radius:50%;background:#101010;border:1px solid var(--cc-hairline);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
+  .v-badge .inner .octo{opacity:.96}
+  .v-badge .tier{font-size:18px;letter-spacing:.26em;text-transform:uppercase;color:var(--cc-text-2)}
+  .v-badge .ticks{position:absolute;inset:0}
+  .v-badge .ticks span{position:absolute;left:50%;top:50%;width:7px;height:26px;margin:-13px 0 0 -3.5px;
+    border-radius:4px;background:var(--cc-gradient);transform-origin:center}
+  .v-badge .rail{margin-top:8px}
+  .v-badge .foot{margin-top:16px}
+`;
+
+export function challengeThumbHtml(css, variant, { w = 1600, h = 900 } = {}) {
+  const { brandTagline } = challenge;
+  const brand = `<div class="cc">${markSvg({ px: 46, frame: true, id: `ct-${variant}` })}${wordmark()}</div>`;
+  const foot = `<div class="foot"><span>codecrumbs.in</span><span class="tag">${esc(brandTagline)}</span></div>`;
+  const seg7 = Array.from({ length: 7 }, () => '<span class="seg on"></span>').join('');
+  const railFull = `<div class="rail"><span>Day 1</span>${seg7}<span>Day 7</span></div>`;
+  const cellCheck = `<svg class="ck" width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4 4L19 7" stroke="#0A0A0A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  const V = {
+    octocat: `
+      <div class="brandrow">${brand}<span class="pill"><span class="dot"></span>7-Day Challenge</span></div>
+      <div class="stage">
+        <div class="octo">${githubMarkSvg({ px: 420 })}</div>
+        <div class="lock"><span class="seven grad">7</span><span class="unit"><b>DAYS</b><i>commit every day</i></span></div>
+      </div>
+      ${railFull}
+      ${foot}`,
+
+    streak: `
+      <div class="brandrow">${brand}<div class="octo-sm">${githubMarkSvg({ px: 92 })}</div></div>
+      <div class="stage">
+        <p class="head">Seven days.<br><span class="grad">One unbroken streak.</span></p>
+        <div class="cells">${Array.from({ length: 7 }, (_, i) => `<div class="cell"><span class="d">Day ${i + 1}</span>${cellCheck}</div>`).join('')}</div>
+        <p class="sub">One small Git skill a day &mdash; <b>show up seven times</b> and you finish.</p>
+      </div>
+      <div class="brandrow"><span class="pill"><span class="dot"></span>The challenge · Commit daily</span><span class="cc-foot">codecrumbs.in</span></div>`,
+
+    terminal: `
+      <div class="brandrow">${brand}<div class="octo-sm">${githubMarkSvg({ px: 88 })}</div></div>
+      <div class="stage">
+        <div class="win">
+          <div class="wbar"><i></i><i></i><i></i><span>challenge — zsh</span></div>
+          <pre><span class="p">$</span> <span class="k">gh</span> challenge start <span class="fl">--days</span> <span class="num">7</span>
+
+<span class="ok">&#10004;</span> day 1   commit pushed
+<span class="ok">&#10004;</span> day 2   commit pushed
+<span class="ok">&#10004;</span> day 3   commit pushed
+<span class="cur">&#9646;</span> day 4   your move&#8230;
+<span class="mut">&#183;   day 5   locked</span>
+<span class="mut">&#183;   day 6   locked</span>
+<span class="mut">&#183;   day 7   locked</span></pre>
+        </div>
+      </div>
+      <div class="brandrow"><span class="pill"><span class="dot"></span>7-Day Challenge</span><span class="cc-foot">codecrumbs.in</span></div>`,
+
+    ascend: `
+      <div class="brandrow">${brand}<span class="pill"><span class="dot"></span>Level up · 7 days</span></div>
+      <div class="stage">
+        <div class="octo-top">${githubMarkSvg({ px: 128 })}</div>
+        <div class="bars">${[92, 148, 204, 262, 320, 382, 446].map((ht, i) => `<div class="col"><div class="bar" style="height:${ht}px"></div><span>D${i + 1}</span></div>`).join('')}</div>
+      </div>
+      <p class="asc-cap">Seven days. Seven skills. <span class="grad">One climb.</span></p>
+      ${foot}`,
+
+    badge: `
+      <div class="brandrow">${brand}<span class="pill"><span class="dot"></span>Unlock the badge</span></div>
+      <div class="stage">
+        <div class="medal">
+          <div class="ticks">${Array.from({ length: 7 }, (_, i) => `<span style="transform:rotate(${(i * 360) / 7}deg) translateY(-258px)"></span>`).join('')}</div>
+          <div class="ring"></div>
+          <div class="inner"><div class="octo">${githubMarkSvg({ px: 188 })}</div><span class="tier">7-Day Challenge</span></div>
+        </div>
+      </div>
+      ${railFull}
+      ${foot}`,
+  };
+
+  const inner = V[variant] || V.octocat;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>${esc(challenge.title)} — thumbnail (${esc(variant)})</title>
+<style>${css}
+${ctBaseCss(w, h)}</style></head><body>
+  <div class="t v-${variant}"><div class="t__glow"></div><div class="t__in">${inner}</div></div>
 </body></html>`;
 }

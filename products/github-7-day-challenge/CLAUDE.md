@@ -6,8 +6,9 @@ Persistent context for this product folder. See `README.md` for how to regenerat
 
 Design-system + generator for the Nas.io product **"The GitHub 7-Day Challenge:
 Zero to Portfolio-Ready"**. Outputs: 7 section PDFs, a square logo (SVG + 512/1024
-PNG), and a 1600×900 challenge thumbnail. Not part of the website build — this
-folder is self-contained and never imported by `src/`.
+PNG), and 1600×900 challenge thumbnails (one titled + 5 title-free alternates,
+since the Nas.io listing overlays its own title card). Not part of the website
+build — this folder is self-contained and never imported by `src/`.
 
 ## PDF versions
 
@@ -49,8 +50,11 @@ folder is self-contained and never imported by `src/`.
   `.cover__glow` dropped. Keep the two structurally parallel.
 - `src/content/challenge.mjs` — all Day 1–7 copy, verbatim from the content pass
   (`~/Downloads/github-challenge-nas-io.md`). `challenge` meta + `days[]`.
-- `src/templates.mjs` — `markSvg()` (logo), `sectionPdfHtml()`, `logoMasterSvg()`,
-  `logoPngHtml()`, `thumbnailHtml()`.
+- `src/templates.mjs` — `markSvg()` (logo), `githubMarkSvg()` (GitHub Invertocat,
+  monochrome), `sectionPdfHtml()`, `logoMasterSvg()`, `logoPngHtml()`,
+  `thumbnailHtml()` (titled 16:9), `challengeThumbHtml()` + `CHALLENGE_THUMBS`
+  (title-free 16:9 alts — Nas.io covers any baked-in headline; these use the
+  GitHub mark + a challenge motif instead).
 - `src/build.mjs` — orchestrator. Renders via **headless Google Chrome**
   (`--print-to-pdf` / `--screenshot`). No npm deps. `CHROME_BIN` overrides path.
 
@@ -64,6 +68,10 @@ folder is self-contained and never imported by `src/`.
   source order decides), or the glow layer collapses into flow.
 - `commands` in `challenge.mjs` only render the canonical command for a step the
   prose already describes. Do not add lessons/concepts not in the content pass.
+- The `challengeThumbHtml` alternates must stay **title-free** (the Nas.io listing
+  covers a baked-in headline). Short challenge slogans are fine; do not add back
+  "The GitHub 7-Day Challenge: Zero to Portfolio-Ready". Keep `githubMarkSvg`
+  monochrome and unwarped per GitHub's logo guidance.
 - Deliverables (`pdfs/`, `pdfs-v2/`, `logo/`, `thumbnail/`) are committed. `build/`
   is scratch and git-ignored.
 - When editing PDF layout, change `pdf.css` and `pdf-v2.css` together so v1/v2
@@ -76,3 +84,5 @@ folder is self-contained and never imported by `src/`.
 ```bash
 node src/build.mjs [all|pdfs|pdfs-v2|logo|thumbnail]
 ```
+
+`thumbnail` renders the titled thumbnail **and** the 5 title-free alternates.
