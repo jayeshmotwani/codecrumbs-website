@@ -1,8 +1,9 @@
 /*
  * Build script — regenerates every deliverable in this product folder.
  *
- *   node src/build.mjs            # everything: 7 PDFs + logo + thumbnail
- *   node src/build.mjs pdfs       # just the 7 section PDFs
+ *   node src/build.mjs            # everything: 7 PDFs (v1 + v2) + logo + thumbnail
+ *   node src/build.mjs pdfs       # just the 7 section PDFs (v1, pdf.css)
+ *   node src/build.mjs pdfs-v2    # just the 7 section PDFs (v2, pdf-v2.css — flat, fast)
  *   node src/build.mjs logo       # just the logo (SVG + 512 + 1024 PNG)
  *   node src/build.mjs thumbnail  # just the Nas.io thumbnail PNG
  *
@@ -29,6 +30,7 @@ const SRC = __dirname;
 const ROOT = resolve(SRC, '..');
 const OUT = {
   pdfs: join(ROOT, 'pdfs'),
+  pdfsV2: join(ROOT, 'pdfs-v2'),
   logo: join(ROOT, 'logo'),
   thumb: join(ROOT, 'thumbnail'),
 };
@@ -85,19 +87,41 @@ function render(html, args) {
   });
 }
 
-/* ── PDFs ─────────────────────────────────────────────────────────────*/
-function buildPdfs() {
-  mkdirSync(OUT.pdfs, { recursive: true });
-  const css = bundleCss('theme.css', 'fonts.css', 'pdf.css');
+/* ── PDFs ─────────────────────────────────────────────────────────────
+ * v1 (pdf.css)    — gradient-rich original, kept for reference.
+ * v2 (pdf-v2.css) — flat performance pass: no shading patterns / soft
+ *                   masks, so PDF viewers scroll without stutter. This is
+ *                   the version to ship. See src/pdf-v2.css for the why. */
+function buildPdfsWith({ outDir, cssFiles, flat, tag }) {
+  mkdirSync(outDir, { recursive: true });
+  const css = bundleCss(...cssFiles);
   for (const day of days) {
-    const file = join(OUT.pdfs, `day-${day.n}-${day.slug}.pdf`);
-    render(sectionPdfHtml(day, css), [
+    const file = join(outDir, `day-${day.n}-${day.slug}.pdf`);
+    render(sectionPdfHtml(day, css, { flat }), [
       '--no-pdf-header-footer',
       '--print-to-pdf-no-header',
       `--print-to-pdf=${file}`,
     ]);
-    console.log('pdf  ->', file.replace(ROOT + '\\', '').replace(ROOT + '/', ''));
+    console.log(`pdf${tag} ->`, file.replace(ROOT + '\\', '').replace(ROOT + '/', ''));
   }
+}
+
+function buildPdfs() {
+  buildPdfsWith({
+    outDir: OUT.pdfs,
+    cssFiles: ['theme.css', 'fonts.css', 'pdf.css'],
+    flat: false,
+    tag: ' ',
+  });
+}
+
+function buildPdfsV2() {
+  buildPdfsWith({
+    outDir: OUT.pdfsV2,
+    cssFiles: ['theme.css', 'fonts.css', 'pdf-v2.css'],
+    flat: true,
+    tag: '2',
+  });
 }
 
 /* ── Logo ─────────────────────────────────────────────────────────────*/
@@ -133,6 +157,7 @@ function buildThumbnail() {
 const task = process.argv[2] || 'all';
 try {
   if (task === 'all' || task === 'pdfs') buildPdfs();
+  if (task === 'all' || task === 'pdfs-v2') buildPdfsV2();
   if (task === 'all' || task === 'logo') buildLogo();
   if (task === 'all' || task === 'thumbnail') buildThumbnail();
   console.log('\ndone. Chrome:', CHROME);
