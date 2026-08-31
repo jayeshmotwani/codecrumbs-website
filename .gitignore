@@ -6,3 +6,6 @@ dist/
 
 # product build scratch
 products/**/build/
+
+# product deliverables — kept local, not tracked
+products/**
