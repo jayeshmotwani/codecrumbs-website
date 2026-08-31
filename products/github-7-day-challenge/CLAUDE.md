@@ -6,9 +6,10 @@ Persistent context for this product folder. See `README.md` for how to regenerat
 
 Design-system + generator for the Nas.io product **"The GitHub 7-Day Challenge:
 Zero to Portfolio-Ready"**. Outputs: 7 section PDFs, a square logo (SVG + 512/1024
-PNG), and 1600×900 challenge thumbnails (one titled + 5 title-free alternates,
-since the Nas.io listing overlays its own title card). Not part of the website
-build — this folder is self-contained and never imported by `src/`.
+PNG), 1600×900 challenge thumbnails (one titled + 5 title-free alternates, since
+the Nas.io listing overlays its own title card), and 5 square 1080×1080 ad
+images for paid social. Not part of the website build — this folder is
+self-contained and never imported by `src/`.
 
 ## PDF versions
 
@@ -54,7 +55,9 @@ build — this folder is self-contained and never imported by `src/`.
   monochrome), `sectionPdfHtml()`, `logoMasterSvg()`, `logoPngHtml()`,
   `thumbnailHtml()` (titled 16:9), `challengeThumbHtml()` + `CHALLENGE_THUMBS`
   (title-free 16:9 alts — Nas.io covers any baked-in headline; these use the
-  GitHub mark + a challenge motif instead).
+  GitHub mark + a challenge motif instead), `adImageHtml()` + `AD_IMAGES`
+  (square 1080×1080 paid-social ads — these DO carry a headline + CTA; colour is
+  free-range per variant, `adGrid()` builds the mock contribution grids).
 - `src/build.mjs` — orchestrator. Renders via **headless Google Chrome**
   (`--print-to-pdf` / `--screenshot`). No npm deps. `CHROME_BIN` overrides path.
 
@@ -72,8 +75,13 @@ build — this folder is self-contained and never imported by `src/`.
   covers a baked-in headline). Short challenge slogans are fine; do not add back
   "The GitHub 7-Day Challenge: Zero to Portfolio-Ready". Keep `githubMarkSvg`
   monochrome and unwarped per GitHub's logo guidance.
-- Deliverables (`pdfs/`, `pdfs-v2/`, `logo/`, `thumbnail/`) are committed. `build/`
-  is scratch and git-ignored.
+- `adImageHtml` is the opposite case — these are paid ads, so headline + CTA are
+  wanted. Keep them square (1080), keep the Code Crumbs wordmark + GitHub mark,
+  and keep the `@your-username` profile mock a clear placeholder (never a real
+  handle). **Do not state a price or call it "free"** — the ads carry the start
+  date ("Starts 1 Sept 2026") instead. Deliverables live in `ads/`.
+- Deliverables (`pdfs/`, `pdfs-v2/`, `logo/`, `thumbnail/`, `ads/`) are committed.
+  `build/` is scratch and git-ignored.
 - When editing PDF layout, change `pdf.css` and `pdf-v2.css` together so v1/v2
   stay in sync — but never reintroduce gradients, `background-clip: text`,
   translucent `linear-gradient` fills, `filter: blur`, or full-page radial
@@ -82,7 +90,8 @@ build — this folder is self-contained and never imported by `src/`.
 ## Regenerate
 
 ```bash
-node src/build.mjs [all|pdfs|pdfs-v2|logo|thumbnail]
+node src/build.mjs [all|pdfs|pdfs-v2|logo|thumbnail|ads]
 ```
 
 `thumbnail` renders the titled thumbnail **and** the 5 title-free alternates.
+`ads` renders the 5 square 1080×1080 paid-social images into `ads/`.
